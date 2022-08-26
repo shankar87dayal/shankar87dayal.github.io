@@ -23,7 +23,7 @@ function Login() {
         offset:3
       }}>
 
-      <Card  className='shadow-sm mt-5' color='warning'>
+      <Card  className='shadow-sm mt-5' color=''>
 
       <CardBody>
 
