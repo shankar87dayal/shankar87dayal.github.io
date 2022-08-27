@@ -1,26 +1,29 @@
-
-import { Button,
-  //  Card,
-  //   CardBody, 
-  //   CardFooter,
-    Container,
-    Row,
-    Col
-   } from "reactstrap";
+import { Container,
+   Row,
+  Col, 
+  Button, 
+  // Card, 
+  // CardBody, 
+  // CardFooter 
+} from "reactstrap";
+import Base from "./Base";
 
 const Home =({title="Default Title"
  ,description="Default Description"
  ,buttonName="Default ButtonName",
   myFun}) =>{
 
-    // let styleobj = {padding: '20px',
-    //  background: '#e2e2e2',
-    //   border: '1px solid red',
-    //   margin: '10px'
+    let styleobj = {padding: '20px',
+     background: '#e2e2e2',
+      border: '1px solid red',
+      margin: '10px'
     
-    // }
+    }
 
     return(
+      
+      <Base>
+
       <div className="banner">
       <Container >
   
@@ -43,6 +46,8 @@ const Home =({title="Default Title"
   
       </Container>
       </div>
+
+      </Base>
     );
     
 }

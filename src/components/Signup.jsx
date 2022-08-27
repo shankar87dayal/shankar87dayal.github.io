@@ -15,6 +15,7 @@ import {
 } from 'reactstrap'
 import { createUser } from '../services/user-service';
 import { toast } from 'react-toastify'
+import Base from './Base';
 function Signup() {
 
   // const [name, setName] = useState('')
@@ -30,7 +31,7 @@ function Signup() {
   })
 
   const onFieldChange = (event, fieldName) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setUser({ ...user, [fieldName]: event.target.value })
 
   }
@@ -78,6 +79,10 @@ function Signup() {
 
   
   return (
+    
+
+    <Base>
+    
     <Container>
 
     <Row>
@@ -224,6 +229,9 @@ function Signup() {
 
 
   </Container>
+
+    </Base>
+
   )
 }
 
