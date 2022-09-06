@@ -13,12 +13,12 @@ const Home =({title="Default Title"
  ,buttonName="Default ButtonName",
   myFun}) =>{
 
-    let styleobj = {padding: '20px',
-     background: '#e2e2e2',
-      border: '1px solid red',
-      margin: '10px'
+    // let styleobj = {padding: '20px',
+    //  background: '#e2e2e2',
+    //   border: '1px solid red',
+    //   margin: '10px'
     
-    }
+    // }
 
     return(
       

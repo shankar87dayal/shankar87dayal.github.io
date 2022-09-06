@@ -6,11 +6,11 @@ import {
     Col,
     Card,
     CardBody,
-    CardTitle,
+    //CardTitle,
     Input,
     Label,
     Button,
-    form
+    //form
   } from 'reactstrap'
 import { generateToken } from '../services/user-service'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +53,7 @@ function Login() {
       naviage("/user/dashboard")
     })
   }).catch(error => {
-    if (error.response.status == 400 || error.response.status == 404)
+    if (error.response.status === 400 || error.response.status === 404)
     {
       toast.error(error.response.data.message)
     }else{
