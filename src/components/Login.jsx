@@ -114,7 +114,7 @@ function Login() {
 
           <Container className='text-center'>
             <Button block color='primary' className='rounded-0'>Login</Button>
-            <Button  block  color='primary' className='mt-2 rounded-0'>Reset</Button>
+            <Button  block  color='primary' className='mt-2 rounded-0' type="reset" >Reset</Button>
           </Container>
 
          </form>

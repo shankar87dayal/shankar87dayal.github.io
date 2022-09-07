@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink as ReactLink } from 'react-router-dom'
+import { NavLink as ReactLink, useNavigate } from 'react-router-dom'
 import {
     Collapse,
     Navbar,
@@ -14,12 +14,22 @@ import {
     DropdownItem,
     NavbarText,
 } from 'reactstrap';
-import { checkLogin, getCurrentUser } from '../auth'
+import { checkLogin, getCurrentUser, logout } from '../auth'
 function CustomNavbar() {
+
+    let navigate= useNavigate()
 
     const [isOpen, setIsOpen] = useState(false)
 
     const toggle = () => setIsOpen(!isOpen);
+
+
+    const doLogout = () =>{
+        logout(() =>{
+            navigate("/")
+        })
+    }
+
     return (
         <div>
             <Navbar
@@ -62,6 +72,13 @@ function CustomNavbar() {
 
                     <Nav navbar>
 
+                        
+                        <NavItem>
+                            <NavLink tag={ReactLink} to="/user/cart"  >
+                                Cart ( 0 )
+                            </NavLink>
+                        </NavItem>
+
                         {
                             (!checkLogin()) && (
                                 <>
@@ -95,7 +112,7 @@ function CustomNavbar() {
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink  >
+                                        <NavLink onClick={doLogout}  >
                                             Logout
                                         </NavLink>
                                     </NavItem>

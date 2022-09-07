@@ -211,7 +211,7 @@ function Signup() {
 
               <Container className='mt-2 text-center'>
                 <Button color='primary'>Register</Button>
-                <Button color='danger ms-2'>Reset Data</Button>
+                <Button color='danger ms-2' type='reset'>Reset Data</Button>
               </Container>
 
             </Form>

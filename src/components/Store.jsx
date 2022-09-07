@@ -6,6 +6,8 @@ import { loadProducts, loadProductsByCategory } from '../services/product-servic
 import {loadCategories} from '../services/category-service'
 import { Link, useParams } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { toast } from 'react-toastify'
+import {addItemToCart as addCart} from '../services/cart-service'
 function Store() {
 
 
@@ -13,29 +15,40 @@ function Store() {
 
   const [categories, setCategories] = useState(null)
   const [productDetail, setProductDetails] = useState(null)
-  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber, setPageNumber] = useState({
+       count:0
+  })
+
+  const [flag,setFlag] = useState(true)
 
   useEffect(() => {
     
+    if(flag){
+      console.log("initial time")
+
+      getCategories()
+      setFlag(false)
+    }else{
+      console.log("not initial time")
+      setProductDetails(null)
+      setPageNumber({count:0})
+    }
     
-    getProducts()  
-    
-    getCategories()
     
     console.log(categoryId)
   }, [categoryId])
 
 
   useEffect(() => {
-    console.log(pageNumber)
-    getProducts(pageNumber)
+    console.log("page number :" + pageNumber.count)
+    getProducts(pageNumber.count)
   }, [pageNumber])
 
   const getProducts = (pageNumber) => {
 
     let ob=null
     if(categoryId==='all'){
-      ob= loadProducts()
+      ob= loadProducts(pageNumber)
     }else{
       ob=loadProductsByCategory(categoryId,pageNumber)  
     }
@@ -74,8 +87,33 @@ function Store() {
   }
 
   const loadMoreComponent = () => {
-    console.log("loading more")
-    setPageNumber(pageNumber + 1)
+    console.log("loading more....")
+    setPageNumber({ count:pageNumber.count+1 })
+
+  }
+
+   //add item to cart
+  // const addItemToCart =(product) => {
+  //   console.log(product)
+  //   addCart(product.productId,1).then((data)=>{
+  //     console.log(data)
+  //     toast.success("Item Added to Cart ")
+  //   }).catch(error => {
+  //     console.log(error)
+  //   })
+
+  // }
+
+  //add item to card
+  const addItemToCart=(product)=>{
+    console.log(product)
+    addCart(product.productId,1)
+    .then((data)=>{
+      console.log(data)
+      toast.success("Item Added to Cart")
+    }).catch(error=>{
+      console.log(error)
+    })
 
   }
 
@@ -95,7 +133,7 @@ function Store() {
           productDetail.content.map((item, index) => (
             <Col md="6" lg="4" key={index}>
 
-              <Product product={item} />
+              <Product addCart= {addItemToCart} product={item} />
 
             </Col>
           ))

@@ -2,7 +2,9 @@ import React from 'react'
 import { Button, Card, CardBody, CardText, Container } from 'reactstrap'
 import { BASE_URL } from '../services/axios-helper'
 
-function Product({ product }) {
+
+
+function Product({ product,addCart}) {
 
     let imageStyle = {
         width: '100%',
@@ -31,7 +33,7 @@ function Product({ product }) {
                     </CardText>
 
                     <Container className='text-center'>
-                        <Button size='sm' color='success' >Add to Cart</Button>
+                        <Button onClick={(event) =>addCart(product)} size='sm' color='success' >Add to Cart</Button>
                         <Button size='sm' className='ms-2' color='danger' >View Product</Button>
                     </Container>
 
