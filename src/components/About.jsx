@@ -1,12 +1,15 @@
-import React from 'react'
-import Base from './Base'
+import { useContext } from "react";
 
-function About() {
-  return (
-    <Base>
-    <div><h1>This is about page</h1></div>
-    </Base>
-  )
+import Base from "./Base";
+const About = () => {
+
+    return (
+        <Base>
+            <div>
+
+                <h1>This is about page</h1>   
+            </div>
+        </Base>
+    )
 }
-
 export default About

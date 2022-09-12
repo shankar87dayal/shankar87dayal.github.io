@@ -8,7 +8,14 @@ import { Link, useParams } from 'react-router-dom'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { toast } from 'react-toastify'
 import {addItemToCart as addCart} from '../services/cart-service'
+import { useContext } from 'react'
+import { context1 } from '../context'
+
 function Store() {
+
+
+
+  const value=useContext(context1)
 
 
   const {categoryId}=useParams()
@@ -110,6 +117,7 @@ function Store() {
     addCart(product.productId,1)
     .then((data)=>{
       console.log(data)
+      value.setCart(data)
       toast.success("Item Added to Cart")
     }).catch(error=>{
       console.log(error)

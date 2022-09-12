@@ -11,6 +11,7 @@ function Dashboard() {
 
   useEffect(() => {
     setUser(getCurrentUser())
+    console.log(getCurrentUser());
   }, [])
 
   const logoutUser = () => {
