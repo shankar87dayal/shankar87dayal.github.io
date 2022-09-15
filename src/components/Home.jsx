@@ -39,7 +39,7 @@ const Home =({title="Default Title"
   
   
             <Container className="text-center">
-              <Button className="rounded-0" size="lg"  color="primary">Go to Store</Button>
+              <Button className="rounded-0" size="lg"  color="primary" oncl>Go to Store</Button>
             </Container>
           </Col>
         </Row>
