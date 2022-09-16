@@ -24,3 +24,7 @@ export const loadProductsByCategory = (
     )
     .then((response) => response.data);
 };
+
+export const getProduct = (productId) => {
+  return http.get(`/products/${productId}`).then((res) => res.data);
+};

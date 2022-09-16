@@ -19,6 +19,7 @@ import Store from "./components/Store";
 import Cart from "./components/Cart";
 import { CartProvider } from "./context";
 import Orders from "./components/Order";
+import ViewProduct from "./components/ViewProduct";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
 
           <Route path="/services" element={<Services />} />
           <Route path="/store/:categoryId" element={<Store />} />
+          <Route path="/view-product/:productId" element={<ViewProduct />} />
 
           <Route path="/user" element={<PrivateRoutes />}>
             <Route path="dashboard" element={<Dashboard />} />
