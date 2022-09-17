@@ -20,6 +20,14 @@ import Cart from "./components/Cart";
 import { CartProvider } from "./context";
 import Orders from "./components/Order";
 import ViewProduct from "./components/ViewProduct";
+import AdminDashboard from "./page/admin/AdminDashboard";
+import AdminHome from "./page/admin/AdminHome";
+import ManageUser from "./page/admin/ManageUser";
+import ViewProducts from "./page/admin/ViewProducts";
+import AddProduct from "./page/admin/AddProduct";
+import AddCategory from "./page/admin/AddCategory";
+import ManageOrder from "./page/admin/ManageOrder";
+import ViewCategories from "./page/admin/ViewCategories";
 
 
 function App() {
@@ -50,6 +58,18 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="orders" element={<Orders />} />
             
+          </Route>
+
+          <Route path="/admin-dashboard" element={<AdminDashboard />} >
+            <Route path="home" element = {<AdminHome />} />
+            <Route path="users" element = {<ManageUser />} />
+            <Route path="products" element = {<ViewProducts />} />
+            <Route path="add-product" element = {<AddProduct />} />
+            <Route path="add-category" element = {<AddCategory/>} />
+            <Route path="orders" element = {<ManageOrder />} />
+            <Route path="categories" element = {<ViewCategories />} />
+          
+
           </Route>
         </Routes>
       </BrowserRouter>
