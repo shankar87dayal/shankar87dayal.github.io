@@ -9,3 +9,6 @@ export const createOrder = (orderDetail) => {
 export const getOrders = () => {
   return privateHttp.get(`/orders/getOrder`).then(res=>res.data);
 };
+export const getAllOrders = () => {
+  return privateHttp.get(`/orders/getAll`).then(res=>res.data);
+};

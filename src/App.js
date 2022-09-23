@@ -30,6 +30,7 @@ import ManageOrder from "./page/admin/ManageOrder";
 import ViewCategories from "./page/admin/ViewCategories";
 
 
+
 function App() {
   // const [x,setX]=useState(50)
 
@@ -64,10 +65,12 @@ function App() {
             <Route path="home" element = {<AdminHome />} />
             <Route path="users" element = {<ManageUser />} />
             <Route path="products" element = {<ViewProducts />} />
+           
             <Route path="add-product" element = {<AddProduct />} />
             <Route path="add-category" element = {<AddCategory/>} />
             <Route path="orders" element = {<ManageOrder />} />
             <Route path="categories" element = {<ViewCategories />} />
+            
           
 
           </Route>

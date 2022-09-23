@@ -14,7 +14,7 @@ import {
     DropdownItem,
     NavbarText,
 } from 'reactstrap';
-import { checkLogin, getCurrentUser, logout } from '../auth'
+import { checkAdminUser, checkLogin, getCurrentUser, logout } from '../auth'
 import { context1 } from '../context'
 
 function CustomNavbar() {
@@ -82,11 +82,12 @@ function CustomNavbar() {
 
                             {
                                 (!checkLogin()) && (
-                                    <>                                    <NavItem>
+                                    <>  
+                                     <NavItem>
                                         <NavLink tag={ReactLink} to="/login">
                                             Login
                                         </NavLink>
-                                    </NavItem>
+                                     </NavItem>
                                         <NavItem>
                                             <NavLink tag={ReactLink} to="/singup">
                                                 Singup
@@ -103,7 +104,17 @@ function CustomNavbar() {
 
                             {
                                 (checkLogin()) && (
+
                                     <>
+                                       {
+                                            (checkAdminUser() && (
+                                                <NavItem>
+                                                    <NavLink tag={ReactLink} to="/admin-dashboard/home">
+                                                        Admin Dashboard
+                                                    </NavLink>
+                                                </NavItem>
+                                            ))
+                                        }
 
                                         <NavItem>
                                             <NavLink tag={ReactLink} to="/user/orders"  >

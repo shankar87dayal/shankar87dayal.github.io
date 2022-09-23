@@ -1,5 +1,5 @@
-import { http } from "./axios-helper";
-
+import {http, privateHttp} from "./axios-helper";
+import product from "../components/Product";
 
 export const loadProducts = (
   pageNumber = "0",
@@ -24,7 +24,19 @@ export const loadProductsByCategory = (
     )
     .then((response) => response.data);
 };
-
+// get product 
 export const getProduct = (productId) => {
   return http.get(`/products/${productId}`).then((res) => res.data);
 };
+// Delete product 
+export function deleteProduct(productId){
+  return privateHttp.get(`/products/${productId}`).then((res) => res.data);
+};
+// Add product 
+export function addProduct(product) {
+  return privateHttp.post(`/categories/${product.categoryId}/products/`, product).then(res => res.data)
+}
+// Add product 
+export function updateProduct(productId) {
+  return privateHttp.put(`/products/${productId}`).then(res => res.data)
+}

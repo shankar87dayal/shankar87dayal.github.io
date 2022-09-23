@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from "reactstrap";
-import {toast} from "react-toastify";
-import {addProduct} from "../../services/product-service";
-import {loadCategories} from "../../services/category-service"
+import React, { useState } from 'react'
+import { toast } from 'react-toastify';
+import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import { updateProduct } from '../../services/product-service';
 
-function AddProduct() {
+function UpdateProduct() {
 
-  const [categories, setCategories] = useState([])
+   
 
     const [product, setProduct] = useState({
         productName: '',
@@ -20,22 +19,11 @@ function AddProduct() {
 
     });
 
-    useEffect(() => {
-
-        loadCategories().then(cats => {
-            setCategories([...cats])
-        })
-            .catch(error => {
-                console.log(error)
-                toast.error("error in loading categories")
-            })
-
-    }, []);
-
-    function addProductFormSubmit(event) {
+    
+    function updateProductFormSubmit(event) {
 
         event.preventDefault()
-        addProduct(product).then(data => {
+        updateProduct(product).then(data => {
             console.log(data)
             toast.success("Product added success")
             setProduct({
@@ -55,14 +43,14 @@ function AddProduct() {
         })
     }
 
-    function addProductHtml() {
+    function updateProductHtml() {
         return (
             <Row>
                 <Col>
 
                     <h3>Add New Product</h3>
 
-                    <Form onSubmit={addProductFormSubmit}>
+                    <Form onSubmit={updateProductFormSubmit}>
 
 
                         {/*name*/}
@@ -160,9 +148,9 @@ function AddProduct() {
                             </Input>
                         </FormGroup>
 
-                        <Container className={'text-center'}>
+                        {/* <Container className={'text-center'}>
                             <Button type={'submit'} color={'success'}>Add Product</Button>
-                        </Container>
+                        </Container> */}
 
                     </Form>
 
@@ -175,7 +163,7 @@ function AddProduct() {
     <Container>
             <Card>
                 <CardBody>
-                    {addProductHtml()}
+                    {updateProductHtml()}
 
                 </CardBody>
             </Card>
@@ -183,4 +171,4 @@ function AddProduct() {
   )
 }
 
-export default AddProduct
+export default UpdateProduct

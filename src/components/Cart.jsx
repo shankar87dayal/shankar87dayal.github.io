@@ -2,16 +2,20 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { CardBody, Container, Card, CardText, Button, FormGroup, Input, Col,Row } from 'reactstrap'
-import { getCart,removeItemFromCart,addItemToCart } from '../services/cart-service'
+import { getCart,removeItemFromCart as removeItem,addItemToCart } from '../services/cart-service'
 import Base from './Base'
 import { context1 } from '../context'
 import { useContext } from 'react'
 import { toast } from 'react-toastify'
 import { BASE_URL } from '../services/axios-helper'
 import {createOrder as createOrderService} from '../services/order-service'
+import { useNavigate } from 'react-router-dom'
+import {createOrder as paymentOrder, successPayment} from '../services/payment-service'
 
 
 function Cart() {
+    
+    const navigate=useNavigate()
 
     let imageStyle = {
         width: '100%',
@@ -56,8 +60,8 @@ function Cart() {
         })
     }
 
-    const removeItemFromCartt=(item)=>{
-        removeItemFromCart(item.product.productId).then(data=>{
+    const removeItemFromCart=(item)=>{
+        removeItem(item.product.productId).then(data=>{
             setCart(data)
             value.setCart(data)
         })
@@ -67,20 +71,117 @@ function Cart() {
         })
     }
 
+    const initializeRazorpay = () => {
+        return new Promise((res) => {
+            const script = document.createElement("script")
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+
+            script.onload = () => {
+                res(true)
+            }
+
+            script.onerror = () => {
+                res(false)
+            }
+
+            document.body.appendChild(script)
+        })
+
+    }
+
+    //initiate payment
+    async function initiatePayment(data) {
+
+        const res = await initializeRazorpay();
+        if (res) {
+            //console.log("Razorpayintialized")
+            paymentOrder(data.totalAmount).then(res => {
+                console.log(res)
+                toast.success("order created")
+                if (res.message === 'CREATED') {
+
+
+                    //open payment form
+
+
+                    var options = {
+                        "key": "rzp_test_ijvboBTLDIWbYG", // Enter the Key ID generated from the Dashboard
+                        "amount": res.price, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                        "currency": "INR",
+                        "name": "LCWD Payment Page",
+                        "description": "This is learning payment module",
+                        "image": "https://learncodewithdurgesh.com/_next/image?url=%2Fimages%2Fdurgesh_sir.webp&w=1920&q=75",
+                        "order_id": res.orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                        "prefill": {
+                            "name": "",
+                            "email": "",
+                            "contact": "9999999999"
+                        },
+                        "notes": {
+                            "address": ""
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    };
+
+
+                    options.handler = (response) => {
+
+
+                        response['user_order_id'] = data.orderId
+                        console.log(response)
+
+                        successPayment(response).then(r => {
+                            console.log(r)
+                            if (r.captured) {
+                                toast.success("Payment done .. your order proceeded")
+                                navigate("/user/orders")
+
+                            }
+
+                        }).catch(error => {
+                            console.log(error)
+                            toast.error("Error while capturing the payment :")
+                        })
+
+
+                    }
+
+
+                    const rzp = new window.Razorpay(options);
+                    rzp.open()
+
+
+                }
+
+            }).catch(error => {
+                console.log(error)
+                toast.error("Error in creating order")
+            })
+
+
+        } else {
+            toast.error("Error in initializing razorpay")
+        }
+
+    }
 
 
     const createOrder=()=>{
         let f=window.confirm("Are you sure want to proceed ?")
 
-        if(f==false){
+        if(f===false){
             console.log(f)
             return;
         }
         //updating the cart id of order detail
         orderDetail.cartId=cart.cartId
         createOrderService(orderDetail).then((data)=>{
+            console.log(data);
             toast.success("Order Created : Redirecting to payment page... ")
             setOrderCreated(true)
+            initiatePayment(data);
         })
         .catch(error=>{
             console.log(error)

@@ -44,3 +44,10 @@ export const login = (data, next) => {
       return null;
     }
   };
+
+  export function checkAdminUser() {
+    let user = getCurrentUser()
+    console.log(user)
+    let flag = user.roles.find(r => r.id === 5245)
+    return flag ? true : false
+}
