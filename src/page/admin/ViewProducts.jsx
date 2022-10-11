@@ -22,9 +22,34 @@ import {
   Table,
 } from "reactstrap";
 import { BASE_URL } from "../../services/axios-helper";
-import { deleteProduct, loadProducts} from "../../services/product-service";
+import { deleteProduct, loadProducts,loadSingleProduct} from "../../services/product-service";
 
 function ViewProducts() {
+
+  const [modal, setModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null)
+  const [product, setProduct] = useState(null);
+  const[clickProduct,setClickProduct]=useState(null);
+
+  const closeModal = () => setModal(false);
+  // const openModal = (Product) => {
+  //   setSelectedItem(product)
+  //   setModal(true)
+  // };
+
+  const openModal=(clickProductId)=>{
+    setModal(true)
+  
+   loadSingleProduct(clickProductId).then(data=>{
+    setClickProduct(data)
+    //console.log(clickProduct)
+   }).catch(error=>{
+    console.log(error)
+   })
+    //console.log(selectItem)
+  //console.log(selectItem.item[0].product.productName)
+  }
+ 
 
   let imageStyle = {
     width: '100%',
@@ -32,15 +57,9 @@ function ViewProducts() {
     objectFit: 'contain',
     margin: '15px 0'
   }
-  const [modal, setModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [product, setProduct] = useState(null);
+  
 
-  const closeModal = () => setModal(false);
-  const openModal = (Product) => {
-    setSelectedItem(product)
-    setModal(true)
-  };
+  
 
   useEffect(() => {
     loadProductFromServer(0);
@@ -168,7 +187,7 @@ function ViewProducts() {
                       <Button tag={Link} to={'/view-product/'+product.productId} color={"warning"} size={"sm"} className={"ms-2"}>
                         Update
                       </Button>
-                      <Button onClick={() => openModal(product)} color={"primary"} size={"sm"} className={"ms-2"}>
+                      <Button onClick={() => openModal(p.productId)} color={"primary"} size={"sm"} className={"ms-2"}>
                         View
                       </Button>
                     </td>

@@ -19,6 +19,7 @@ function AddProduct() {
         categoryId: 0
 
     });
+    
 
     useEffect(() => {
 

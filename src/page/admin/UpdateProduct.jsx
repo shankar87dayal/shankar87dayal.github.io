@@ -48,7 +48,7 @@ function UpdateProduct() {
             <Row>
                 <Col>
 
-                    <h3>Add New Product</h3>
+                    <h3>Update existing Product</h3>
 
                     <Form onSubmit={updateProductFormSubmit}>
 
