@@ -44,6 +44,15 @@ export function updateProduct(productId) {
 export const loadSingleProduct=(productId)=>{
   return http.get(`/products/${productId}`).then(response=>response.data)
 };
-export const UploadImage=(productId)=>{
-  return http.post(`/products/images/${productId}`).then(response=>response.data)
-};
+
+
+export const UploadImage=(images,productId)=>{
+  const formData=new FormData();
+  formData.append("product_image",images);
+  return privateHttp.post(`/products/images/${productId}`,formData,{
+headers:{
+  "Content-Type":"multipart/form-data"
+},
+  }).then(res=>res.data)
+
+}

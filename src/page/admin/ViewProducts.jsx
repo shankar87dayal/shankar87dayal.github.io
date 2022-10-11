@@ -30,24 +30,27 @@ function ViewProducts() {
   const [selectedItem, setSelectedItem] = useState(null)
   const [product, setProduct] = useState(null);
   const[clickProduct,setClickProduct]=useState(null);
-
+  
   const closeModal = () => setModal(false);
+
   // const openModal = (Product) => {
   //   setSelectedItem(product)
   //   setModal(true)
   // };
 
   const openModal=(clickProductId)=>{
-    setModal(true)
-  
+
+   console.log(clickProductId);
+   setModal(true);
    loadSingleProduct(clickProductId).then(data=>{
-    setClickProduct(data)
-    //console.log(clickProduct)
+   setSelectedItem(data);
+    console.log(data);
+
    }).catch(error=>{
-    console.log(error)
+    console.log(error);
    })
-    //console.log(selectItem)
-  //console.log(selectItem.item[0].product.productName)
+
+  
   }
  
 
@@ -99,37 +102,40 @@ function ViewProducts() {
   const modalHtml = () => {
     return (
       <Modal isOpen={modal} toggle={closeModal} size='lg' centered={true} >
-        {/* <ModalHeader toggle={closeModal}>Products of order {selectedItem && 'MYSHOP'+selectedItem.productId}</ModalHeader> */}
+        <ModalHeader toggle={closeModal}>Products of order {selectedItem && 'MYSHOP'+selectedItem.productId}</ModalHeader>
         <ModalBody>
 
-          {
-            selectedItem && selectedItem.items.map((item, index) => (
-              <Card className="mt-2 border-0 shadow-sm" >
-                <CardBody>
+       
+        
+        <Card>
+          <CardBody>
+            <Row>
+            <Col md={8}>
+                          <CardText>
+                            <h5>Product Name : {selectedItem.productName}</h5>
+                            </CardText >
+    
+                            <CardText  >
+                              <h5>Product Desc: {selectedItem.productDesc} </h5>
+                            </CardText>
 
-                  <Row key={index}>
-                    <Col md={8}>
-                      <h3>{item.product.productName}</h3>
-                      <CardText>
-                        Quantity : <b>{item.quantity}</b>
-                      </CardText>
+                            <CardText ><h5>{selectedItem.stock?"Available":"false"}</h5></CardText>
+    
+                            <CardText>
+                            <h5>Quantity : <b> {selectedItem.productQuantity}</b></h5>
+                            </CardText>
+    
+                            <CardText>
+                            <h5>Prize: ₹{selectedItem.productPrice}<b></b></h5>
+                            </CardText>
+                           
+                          </Col>
+                      <Col md={4}><img style={imageStyle} src={BASE_URL+'/products/images/'+selectedItem.productId} alt="" /></Col>
+            </Row>
 
-
-                      <CardText className='mt-3'>
-                        Total Price : <b>{item.totalProductPrice}</b>
-                      </CardText>
-
-                    </Col>
-                    <Col md={4}>
-                      <img style={imageStyle} src={BASE_URL + '/products/images/' + item.product.productId} alt="" />
-
-                    </Col>
-                  </Row>
-
-                </CardBody>
-              </Card>
-            ))
-          }
+          </CardBody>
+        </Card>
+        
 
 
         </ModalBody>
@@ -187,7 +193,7 @@ function ViewProducts() {
                       <Button tag={Link} to={'/view-product/'+product.productId} color={"warning"} size={"sm"} className={"ms-2"}>
                         Update
                       </Button>
-                      <Button onClick={() => openModal(p.productId)} color={"primary"} size={"sm"} className={"ms-2"}>
+                      <Button  color={"primary"} size={"sm"}  onClick={()=>openModal(p.productId)} className={"ms-2"}>
                         View
                       </Button>
                     </td>
@@ -226,7 +232,13 @@ function ViewProducts() {
     
     <Container>
       <Card>
-        <CardBody>{product && viewProductHtml()} </CardBody>
+        <CardBody>{product && viewProductHtml()} 
+
+        {
+          selectedItem && modalHtml()
+        }
+         </CardBody>
+
       </Card>
     </Container>
    

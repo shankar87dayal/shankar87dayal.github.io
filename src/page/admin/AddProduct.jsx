@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Button, Card, CardBody, Col, Container, Form, FormGroup, Input, Label, Row} from "reactstrap";
 import {toast} from "react-toastify";
-import {addProduct} from "../../services/product-service";
+import {addProduct, UploadImage} from "../../services/product-service";
 import {loadCategories} from "../../services/category-service"
 
 function AddProduct() {
@@ -19,7 +19,7 @@ function AddProduct() {
         categoryId: 0
 
     });
-    
+    const [image, setImage] = useState(null)
 
     useEffect(() => {
 
@@ -38,6 +38,16 @@ function AddProduct() {
         event.preventDefault()
         addProduct(product).then(data => {
             console.log(data)
+
+
+            UploadImage(image,data.productId).then(data=>{
+                toast.success("image is uploaded !!");
+            }).catch(error => {
+                console.log(error)
+                toast.error("Error in uploading image");
+                console.log(error);
+            })
+
             toast.success("Product added success")
             setProduct({
                 productName: '',
@@ -54,6 +64,12 @@ function AddProduct() {
             console.log(error)
             toast.error("error in adding product")
         })
+    }
+
+    // handelFileChange event
+    const handelFileChange= (event)=>{
+        console.log(event.target.files[0]);
+        setImage(event.target.files[0])
     }
 
     function addProductHtml() {
@@ -139,7 +155,7 @@ function AddProduct() {
 
                         <FormGroup>
                             <Label for={'image'}>Product Banner</Label>
-                            <Input className={'ms-2'} id={'image'} type={"file"}/>
+                            <Input className={'ms-2'} id={'image'} type={"file"} onChange={handelFileChange}/>
                         </FormGroup>
 
                         {/*    product category*/}
