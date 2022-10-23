@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { checkLogin, getToken } from '../auth'
 
-export const BASE_URL='http://localhost:8181'
+// export const BASE_URL='http://localhost:8181'
+export const BASE_URL='https://ecommerce-back-apis.herokuapp.com/'
 export const http=axios.create({
     baseURL:BASE_URL
 })

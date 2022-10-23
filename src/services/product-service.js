@@ -36,9 +36,15 @@ export function deleteProduct(productId){
 export function addProduct(product) {
   return privateHttp.post(`/categories/${product.categoryId}/products/`, product).then(res => res.data)
 }
-// Add product 
-export function updateProduct(productId) {
-  return privateHttp.put(`/products/${productId}`).then(res => res.data)
+// update product 
+export function updateProducts(product,productId) {
+  return privateHttp.put(`/products/${productId}`,{
+    "productName" : product.productName,
+    "productDesc" : product.productDesc,
+    "productPrice" : product.productPrice,
+    "Stock" : product.Stock,
+     "Live" : product.Live 
+  }).then(response=>response.data)
 }
 
 export const loadSingleProduct=(productId)=>{

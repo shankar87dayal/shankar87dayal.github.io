@@ -23,13 +23,15 @@ import {
 } from "reactstrap";
 import { BASE_URL } from "../../services/axios-helper";
 import { deleteProduct, loadProducts,loadSingleProduct} from "../../services/product-service";
+// import {updateProduct} from "../admin/UpdataProduct"
+
 
 function ViewProducts() {
 
   const [modal, setModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null)
   const [product, setProduct] = useState(null);
-  const[clickProduct,setClickProduct]=useState(null);
+  
   
   const closeModal = () => setModal(false);
 
@@ -115,15 +117,15 @@ function ViewProducts() {
                             <h5>Product Name : {selectedItem.productName}</h5>
                             </CardText >
     
-                            <CardText  >
+                            {/* <CardText  >
                               <h5>Product Desc: {selectedItem.productDesc} </h5>
+                            </CardText> */}
+                            <CardText  dangerouslySetInnerHTML={ {__html:selectedItem.productDesc} }  >
                             </CardText>
 
                             <CardText ><h5>{selectedItem.stock?"Available":"false"}</h5></CardText>
     
-                            <CardText>
-                            <h5>Quantity : <b> {selectedItem.productQuantity}</b></h5>
-                            </CardText>
+                            
     
                             <CardText>
                             <h5>Prize: ₹{selectedItem.productPrice}<b></b></h5>
@@ -190,7 +192,8 @@ function ViewProducts() {
                       >
                         Delete
                       </Button>
-                      <Button tag={Link} to={'/view-product/'+product.productId} color={"warning"} size={"sm"} className={"ms-2"}>
+                      <Button tag={Link} to={'/admin/UpdateProduct'+p.productId}
+                       action='true' color="success" size="sm"className={"ms-2"}>
                         Update
                       </Button>
                       <Button  color={"primary"} size={"sm"}  onClick={()=>openModal(p.productId)} className={"ms-2"}>

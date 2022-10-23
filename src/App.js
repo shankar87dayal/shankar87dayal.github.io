@@ -28,6 +28,7 @@ import AddProduct from "./page/admin/AddProduct";
 import AddCategory from "./page/admin/AddCategory";
 import ManageOrder from "./page/admin/ManageOrder";
 import ViewCategories from "./page/admin/ViewCategories";
+import UpdateProduct from "./page/admin/UpdataProduct";
 
 
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="home" element = {<AdminHome />} />
             <Route path="users" element = {<ManageUser />} />
             <Route path="products" element = {<ViewProducts />} />
+            <Route path="updateProduct/:productId" element = {<UpdateProduct />} />
            
             <Route path="add-product" element = {<AddProduct />} />
             <Route path="add-category" element = {<AddCategory/>} />

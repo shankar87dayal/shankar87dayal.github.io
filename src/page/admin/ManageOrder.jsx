@@ -1,13 +1,34 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getAllOrders } from "../../services/order-service";
+import { getAllOrders,deleteOrder } from "../../services/order-service";
 import {toast} from "react-toastify";
 import {Button, Card, CardBody, Col, Container, Row, Table} from "reactstrap";
 
 
 function ManageOrder() {
   const [orders, setOrders] = useState([]);
+
+  const [model,setModel] = useState(false);
+  const [selectItem, setSelectItem] = useState(null);
+  const toggle = () => setModel(!model);
+  
+  const deleteOrders=(orderId)=>{
+    deleteOrder(orderId).then(res=>{
+        toast.success("Order canceled Successfully")
+    }).catch(error=>{
+        console.log(error)
+    })
+   
+  }
+
+  let imagesStyle={
+    width:'100%',
+    height:'300px',
+    objectFit:'contain',
+    margin:'15px 0',
+}
+
   useEffect(() => {
     getAllOrders()
       .then((res) => {

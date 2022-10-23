@@ -119,14 +119,14 @@ function AddProduct() {
 
                         {/*quantity*/}
 
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label>Product quantity</Label>
                             <Input type={'number'}
                                    value={product.productQuantity}
                                    onChange={event => setProduct({...product, productQuantity: event.target.value})}
 
                             />
-                        </FormGroup>
+                        </FormGroup> */}
 
 
                         {/*live*/}
